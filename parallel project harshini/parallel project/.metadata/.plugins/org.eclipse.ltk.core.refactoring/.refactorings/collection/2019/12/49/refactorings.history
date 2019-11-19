@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.capgemini.collection.controller.ResgisterUser&apos; to &apos;RegisterUser&apos;&#x0D;&#x0A;- Original project: &apos;collection&apos;&#x0D;&#x0A;- Original element: &apos;com.capgemini.collection.controller.ResgisterUser&apos;&#x0D;&#x0A;- Renamed element: &apos;com.capgemini.collection.controller.RegisterUser&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ResgisterUser&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.capgemini.collection.controller{ResgisterUser.java[ResgisterUser" matchStrategy="1" name="RegisterUser" qualified="false" references="true" similarDeclarations="false" stamp="1575311274366" textual="false" version="1.0"/>
+</session>

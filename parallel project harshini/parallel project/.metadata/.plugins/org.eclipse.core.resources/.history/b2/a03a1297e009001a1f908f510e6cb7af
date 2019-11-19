@@ -1,0 +1,134 @@
+package com.capgemini.collection.controller;
+
+import java.util.Scanner;
+
+import com.capgemini.collection.bean.UserBean;
+import com.capgemini.collection.dao.AdminDao;
+import com.capgemini.collection.dao.Dao;
+import com.capgemini.collection.dao.UserDao;
+import com.capgemini.collection.dao.UserDaoImpl;
+import com.capgemini.collection.factory.Factory;
+
+public class UserLogin {
+	public static void user() {
+		int a=0;
+	
+		AdminDao prod = Factory.getAdminDAOImplInstance();
+
+		UserDao product = Factory.getUserDAOImplInstance();
+		Dao product1 = Factory.getDAOImplInstance();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("ENTER EMAIL ID");
+		String emailId = scan.nextLine();
+		for (UserBean userBean :UserDaoImpl.user) {
+			if (userBean.getEmailId().equals(emailId)) {
+				System.out.println("ENTER PASSWORD");
+				String pass = scan.nextLine();
+				if (userBean.getPassword().equals(pass)) {
+					 a = userBean.getUserId();
+					 break;
+				}else {
+					System.err.println("ENTER VALID PASSWORD");
+					break;
+				}
+			}else {
+				System.err.println("ENTERED EMAILID DOES NOT EXIST");
+				break;
+			}
+		}
+		
+		
+		while (a != 0) {
+
+			System.out.println("ENTER 1 TO VIEW THE PRODUCTS");
+			System.out.println("ENTER 2 TO ADD PRODUCT TO THE CART");
+			System.out.println("ENTER 3 TO DELETE FROM CART");
+			System.out.println("ENTER 4 TO PLACE ORDER");
+			System.out.println("ENTER 5 TO UPDATE THE PROFILE OF USER");
+			System.out.println("ENTER 6 TO SEND MESSAGE TO ADMIN");
+			System.out.println("ENTER 7 TO VIEW MESSAGE FROM ADMIN");
+			System.out.println("ENTER 8 TO LOGOUT");
+			String btn = scan.nextLine();
+
+			switch (btn) {
+			case "1": {
+
+				System.out.println(" THE PRODUCTS  ARE HERE");
+				System.out.println("...............................................");;
+				product1.viewproducts();
+				System.out.println("...............................................");
+
+				break;
+			}
+
+			case "2": {
+				System.out.println("ADD THE PRODUCTS TO THE CART");
+				System.out.println("...............................................");
+				product1.addToCart(a);
+				System.out.println("...............................................");
+				product1.seeCart(a);
+				break;
+			}
+			case "3": {
+				System.out.println("...............................................");
+				product1.seeCart(a);
+				System.out.println("...............................................");
+				product1.deleteFormCart();
+				System.out.println("...............................................");
+				product1.seeCart(a);
+				System.out.println("...............................................");
+				break;
+			}
+			case "4": {
+				System.out.println("...............................................");
+				product1.seeCart(a);
+				System.out.println("...............................................");
+				product1.placeOrder(a);
+				System.out.println("...............................................");
+				product1.viewOrder(a);
+				System.out.println("...............................................");
+				break;
+			}
+			case "5": {
+				System.out.println("UPDATE THE PROFILE");
+				product.seeUser(a);
+				System.out.println("...............................................");
+				product.updateProfile(a);
+				System.out.println("...............................................");
+				product.seeUser(a);
+				break;
+			}
+			case "6": {
+				System.out.println("...............................................");
+				product.sendMsg(a);
+				System.out.println("...............................................");
+				prod.seeMessage();
+				System.out.println("MESSAGE SENT SUCCESSFULLY TO ADMIN");
+				System.out.println("...............................................");
+				break;
+			}
+			case "7": {
+				System.out.println("...............................................");
+				product.seeReply(a);
+				System.out.println("...............................................");
+				break;
+			}
+			case "8": {
+				System.out.println("...............................................");
+				System.out.println("YOU ARE LOGGED OUT");
+				System.out.println("...............................................");
+				System.exit(0);
+				break;
+			}
+			default:{
+				System.out.println("...............................................");
+				System.out.println("ENTER BUTTON BETWEEN 1 TO 10 ONLY");
+				System.out.println("...............................................");
+			}
+
+			}
+
+		}
+
+	}//end of user() method
+}//end of userLogin class

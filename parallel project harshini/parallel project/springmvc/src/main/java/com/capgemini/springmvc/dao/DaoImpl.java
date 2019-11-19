@@ -1,0 +1,507 @@
+
+package com.capgemini.springmvc.dao;
+
+import java.util.List;
+import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.springmvc.beans.AdminBean;
+import com.capgemini.springmvc.beans.CartBean;
+import com.capgemini.springmvc.beans.OrderBean;
+import com.capgemini.springmvc.beans.ProductBean;
+import com.capgemini.springmvc.beans.ReplyBean;
+import com.capgemini.springmvc.beans.RequestBean;
+import com.capgemini.springmvc.beans.UserBean;
+
+@Repository
+public class DaoImpl implements Dao {
+	@PersistenceUnit
+	EntityManagerFactory emf;
+
+	@Override
+	public List<ProductBean> getProducts() {
+		EntityManager manager = emf.createEntityManager();
+		String jpql = "from ProductBean";
+		Query query = manager.createQuery(jpql);
+
+		List<ProductBean> productList = null;
+		try {
+			productList = query.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return productList;
+
+	}
+
+	@Override
+	public AdminBean adminLogin(String emailId, String password) {
+		EntityManager entityManager = emf.createEntityManager();
+		String jpql = "from AdminBean where emailId=:emailId and password=:password";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("emailId", emailId);
+		query.setParameter("password", password);
+		AdminBean bean = null;
+		try {
+			bean = (AdminBean) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	@Override
+	public boolean deleteProduct(int productId) {
+		EntityManager entityManager = emf.createEntityManager();
+		boolean isDeleted = false;
+
+		try {
+			EntityTransaction tx = entityManager.getTransaction();
+			tx.begin();
+			ProductBean bean = entityManager.find(ProductBean.class, productId);
+			entityManager.remove(bean);
+			tx.commit();
+			isDeleted = true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		entityManager.close();
+		return isDeleted;
+	}
+
+	@Override
+	public boolean addProduct(ProductBean bean) {
+		EntityManager entityManager = emf.createEntityManager();
+		boolean isAdded = false;
+		try {
+			EntityTransaction tx = entityManager.getTransaction();
+			tx.begin();
+			entityManager.persist(bean);
+			tx.commit();
+			isAdded = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		entityManager.close();
+
+		return isAdded;
+
+	}
+
+	@Override
+	public boolean updateProduct(ProductBean bean) {
+		EntityManager entityManager = emf.createEntityManager();
+		ProductBean Bean = entityManager.find(ProductBean.class, bean.getProductId());
+		boolean isupdated = false;
+		if (Bean != null) {
+			String category = bean.getProductCategory();
+			if (category != null) {
+				Bean.setProductCategory(category);
+			}
+			String name = bean.getProductCategory();
+			if (name != null) {
+				Bean.setProductName(name);
+			}
+			double price = bean.getProductPrice();
+			if (price != 0) {
+				Bean.setProductPrice(bean.getProductPrice());
+			}
+			int quantity = bean.getProductQuantity();
+			if (quantity != 0) {
+				Bean.setProductQuantity(bean.getProductQuantity());
+			}
+		}
+
+		try {
+			EntityTransaction tx = entityManager.getTransaction();
+			tx.begin();
+			entityManager.persist(Bean);
+			tx.commit();
+			isupdated = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		entityManager.close();
+
+		return isupdated;
+
+	}
+
+	@Override
+	public boolean deleteUser(int userId) {
+
+		EntityManager entityManager = emf.createEntityManager();
+		boolean isDeleted = false;
+
+		try {
+			EntityTransaction tx = entityManager.getTransaction();
+			tx.begin();
+			UserBean bean = entityManager.find(UserBean.class, userId);
+			entityManager.remove(bean);
+			tx.commit();
+			isDeleted = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		entityManager.close();
+		return isDeleted;
+
+	}
+
+	@Override
+	public List<UserBean> getUser() {
+		EntityManager manager = emf.createEntityManager();
+		String jpql = "from UserBean";
+		Query query = manager.createQuery(jpql);
+
+		List<UserBean> userList = null;
+		try {
+			userList = query.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return userList;
+
+	}
+
+	@Override
+	public boolean sendReply(int userId, String msgReply) {
+		boolean isSent = false;
+
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+
+		String emailId = null;
+
+		String jpql = "from UserBean where userId=:userId";
+		Query query = manager.createQuery(jpql);
+		query.setParameter("userId", userId);
+		List<UserBean> list = query.getResultList();
+		for (UserBean li : list) {
+			emailId = li.getEmailId();
+
+		}
+
+		ReplyBean bean = new ReplyBean();
+		bean.setUserId(userId);
+		bean.setEmailId(emailId);
+		bean.setMessage(msgReply);
+		tx.begin();
+		manager.persist(bean);
+		isSent = true;
+		tx.commit();
+
+		return isSent;
+
+	}
+
+	@Override
+	public List<RequestBean> seeRequest() {
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		String jpql = "from RequestBean";
+
+		Query query = manager.createQuery(jpql);
+
+		List<RequestBean> list = query.getResultList();
+
+		tx.commit();
+		return list;
+	}
+
+	@Override
+	public int userLogin(String emailId, String password) {
+		EntityManager manager = emf.createEntityManager();
+		String jpql = "from UserBean where emailId=:emailId and password=:password";
+		Query query = manager.createQuery(jpql);
+		query.setParameter("emailId", emailId);
+		query.setParameter("password", password);
+		int id = 0;
+		UserBean bean = null;
+		try {
+			bean = (UserBean) query.getSingleResult();
+			id = bean.getUserId();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+
+	@Override
+	public boolean registration(UserBean user) {
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		boolean isAdded = false;
+
+		try {
+			tx.begin();
+			manager.persist(user);
+			tx.commit();
+			isAdded = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		manager.close();
+
+		return isAdded;
+	}
+
+	@Override
+	public boolean updateUser(int userId, UserBean bean) {
+		EntityManager entityManager = emf.createEntityManager();
+
+		UserBean Bean = entityManager.find(UserBean.class, userId);
+
+		EntityTransaction tx = entityManager.getTransaction();
+		boolean isupdated = false;
+		if (Bean != null) {
+			String email = bean.getEmailId();
+			if (email != null) {
+				Bean.setEmailId(email);
+			}
+			String pass = bean.getPassword();
+			if (pass != null) {
+				Bean.setPassword(pass);
+			}
+			long mobileNo = bean.getMobileNo();
+			if (mobileNo != 0) {
+				Bean.setMobileNo(mobileNo);
+			}
+
+		}
+		try {
+			tx.begin();
+			entityManager.persist(Bean);
+			tx.commit();
+			isupdated = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		entityManager.close();
+
+		return isupdated;
+
+	}
+
+	@Override
+	public boolean addToCart(int userId, CartBean bean, String productName, int quantity) {
+		boolean isAdded = false;
+		String email = null;
+		String category = null;
+		double price = 0;
+		int id = 0;
+
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+
+		String jpql = " from UserBean  where userId=:userId";
+		tx.begin();
+		Query query = manager.createQuery(jpql);
+		query.setParameter("userId", userId);
+		List<UserBean> list = query.getResultList();
+		for (UserBean li : list) {
+			email = li.getEmailId();
+
+		}
+		Scanner scan = new Scanner(System.in);
+
+		String jpql1 = "from ProductBean where productName=:productName";
+		Query query1 = manager.createQuery(jpql1);
+		int previousQuantity = 0;
+		query1.setParameter("productName", productName);
+		List<ProductBean> list1 = query1.getResultList();
+		for (ProductBean li : list1) {
+			category = li.getProductCategory();
+			id = li.getProductId();
+			productName = li.getProductName();
+			price = li.getProductPrice();
+			previousQuantity = li.getProductQuantity();
+
+			bean.setUserId(userId);
+			bean.setProductId(id);
+			bean.setEmailId(email);
+			bean.setProductCategory(category);
+			bean.setProductName(productName);
+			bean.setProductPrice(price);
+			bean.setQuantity(quantity);
+			int newquantity = previousQuantity - quantity;
+
+			if (newquantity >= 0) {
+				li.setProductQuantity(newquantity);
+				manager.persist(bean);
+
+				tx.commit();
+			}
+		}
+		isAdded = true;
+		return isAdded;
+	}
+
+	@Override
+	public boolean deleteFromCart(int cartId, String productName) {
+		Boolean isDeleted = false;
+
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		String jpql = "delete from CartBean where  cartId=:cartId and productName=:productName";
+		Query query = manager.createQuery(jpql);
+		query.setParameter("cartId", cartId);
+		query.setParameter("productName", productName);
+		query.executeUpdate();
+		isDeleted = true;
+		tx.commit();
+
+		return isDeleted;
+	}
+
+	@Override
+	public double payment(int userId) {
+		double bill = 0;
+
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+
+		String jpql = "select SUM(productPrice*quantity) from CartBean where userId=:userId";
+
+		Query query1 = manager.createQuery(jpql);
+		query1.setParameter("userId", userId);
+
+		bill = (double) query1.getSingleResult();
+		return bill;
+	}
+
+	@Override
+	public boolean sendRequest(int userId, String msgReq) {
+		boolean isSent = false;
+
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+
+		String emailId = null;
+		String jpql = "from UserBean where userId=:userId";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("userId", userId);
+		List<UserBean> list = query.getResultList();
+		for (UserBean li : list) {
+			emailId = li.getEmailId();
+
+		}
+
+		RequestBean bean = new RequestBean();
+		bean.setUserId(userId);
+		bean.setEmailId(emailId);
+		bean.setMessage(msgReq);
+		tx.begin();
+		entityManager.persist(bean);
+		isSent = true;
+		tx.commit();
+
+		return isSent;
+	}
+
+	@Override
+	public List<ReplyBean> seeReply(int userId) {
+
+		EntityManager entityManager = emf.createEntityManager();
+		String jpql = "from ReplyBean where userId=:userId";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("userId", userId);
+		String msg = null;
+		List<ReplyBean> list = query.getResultList();
+
+		return list;
+	}
+
+	@Override
+	public List<CartBean> getCart(int userId) {
+		EntityManager manager = emf.createEntityManager();
+		String jpql = "from CartBean where userId=:userId";
+		Query query = manager.createQuery(jpql);
+		query.setParameter("userId", userId);
+
+		List<CartBean> list = query.getResultList();
+
+		return list;
+
+	}
+
+	@Override
+	public boolean placeOrder(int userId) {
+		OrderBean orderBean = new OrderBean();
+		boolean isPlaced = false;
+
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		String jpql = "from CartBean where userId=:userId";
+		tx.begin();
+
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("userId", userId);
+
+		List<CartBean> list = query.getResultList();
+
+		for (CartBean bean : list) {
+			int cId = bean.getCartId();
+			int pId = bean.getProductId();
+			String emailId = bean.getEmailId();
+			String pCategory = bean.getProductCategory();
+			String pName = bean.getProductName();
+			double price = bean.getProductPrice();
+			int quantity = bean.getQuantity();
+			orderBean.setCartId(cId);
+			orderBean.setUserId(userId);
+
+			orderBean.setEmailId(emailId);
+			orderBean.setProductId(pId);
+			orderBean.setProductCategory(pCategory);
+			orderBean.setProductName(pName);
+			orderBean.setProductPrice(price);
+			orderBean.setQuantity(quantity);
+
+			entityManager.persist(orderBean);
+
+		}
+
+		tx.commit();
+
+		isPlaced = true;
+		return isPlaced;
+	}
+
+	@Override
+	public List<OrderBean> generateReport() {
+
+		EntityManager manager = emf.createEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		String jpql = "from OrderBean";
+		Query query = manager.createQuery(jpql);
+
+		List<OrderBean> orderList = null;
+		try {
+			orderList = query.getResultList();
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return orderList;
+
+	}
+}

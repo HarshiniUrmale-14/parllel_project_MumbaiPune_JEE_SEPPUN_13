@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;AdminBean.java&apos; to &apos;collection/src/com.capgemini.collection.bean&apos;&#x0D;&#x0A;- Original project: &apos;hibernate&apos;&#x0D;&#x0A;- Destination element: &apos;collection/src/com.capgemini.collection.bean&apos;&#x0D;&#x0A;- Original element: &apos;com.capgemini.hibernate.beans.AdminBean.java&apos;" description="Copy compilation unit" destination="=collection/src&lt;com.capgemini.collection.bean" element1="/src\/main\/java&lt;com.capgemini.hibernate.beans{AdminBean.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1575263151399" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,35 @@
+<div class="container mt-4  card card-body">
+    <table class="table table-bordered table-hover ">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th>CART ID</th>
+                <th>USER ID</th>
+                <th>EMAIL ID</th>
+                <th>PRODUCT CATEGORY</th>
+                <th>PRODUCT NAME</th>
+                <th>PRODUCT PRICE</th>
+                <th>PRODUCT QUANTIY</th>
+                <th>DELETE PRODUCT</th>
+            </tr>
+        </thead>
+        <tbody class=" text-dark">
+            <tr *ngFor='let cart of cartArray'>
+                <td>{{cart.cartId}}</td>
+                <td>{{cart.userId}}</td>
+                <td>{{cart.emailId}}</td>
+                <td>{{cart.productCategory}}</td>
+                <td>{{cart.productName}}</td>
+                <td>{{cart.productPrice}}</td>
+                <td>{{cart.quantity}}</td>
+                <td><button class="btn btn-outline-danger" (click)="deleteProduct(cart)">DELETE</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <button routerLink="/paymentinfo" class="btn btn-primary bg-success col-md-4 mb-5"
+        style="margin:auto;display:block">PLACE ORDER</button>
+
+
+
+</div>

@@ -1,0 +1,54 @@
+<div class="container mt-5 ">
+    <div class="container mt-4">
+        <div class="col-md-4 card card-body float-left border-primary" style="height:300px"
+            *ngFor='let product of productarray'>
+            <p> PRODUCT ID :{{product.productId}}</p>
+            <p> PRODUCT CATEGORY :{{product.productCategory}}</p>
+            <P> PRODUCT NAME :{{product.productName}}</P>
+            <p> PRODUCT PRICE :{{product.productPrice}}</p>
+            <P> PRODUCT QUANTITY :{{product.productQuantity}}</P>
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal"
+                (click)="selectProduct(product)">ADD TO CART</button>
+            <div class="modal fade text-dark" id="exampleModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg text-white">
+                            <h5 class="modal-title bg" id="exampleModalLabel">ADD TO CART</h5>
+                            <button type="button" class="close" data-dismiss="modal" (click)="product()"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body border-primary">
+                            <div class="alert alert-danger" *ngIf="notValid">{{notValid.description}}</div>
+                            <form #addtocart="ngForm" (ngSubmit)="addForm(addtocart)">
+                                <input type="hidden" name="pk" #pk='ngModel' [(ngModel)]="selectedProduct.pk">
+                                <div class="form-group">
+                                    <label for="productName"></label>
+                                    <input type="hidden" name="productName" class="form-control border-primary"
+                                        #productName="ngModel" [ngModel]="selectedProduct.productName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">QUANTITY TO ADD TO CART</label>
+                                    <input type="number" name="quantity" class="form-control border-primary"
+                                        #quantity="ngModel" ngModel required>
+                                    <div *ngIf='quantity.touched && quantity.invalid'>
+                                        <p class="alert alert-danger" *ngIf='quantity.errors.required'>
+                                            field is mandatory
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="btn-grroup float-right">
+                                    <button type="submit" class="btn btn-outline-primary"
+                                        [disabled]='addtocart.invalid'>SUBMIT</button>
+                                    <button type="reset" class="btn btn-outline-dark">RESET</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

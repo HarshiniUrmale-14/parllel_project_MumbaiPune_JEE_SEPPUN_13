@@ -1,0 +1,75 @@
+<div class="container mt-4  card card-body ">
+    <table class="table table-bordered table-hover  ">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th>MESSAGE ID</th>
+                <th> USER ID</th>
+                <th>EMAIL ID</th>
+                <th>MESSAGE</th>
+            </tr>
+        </thead>
+        <tbody class="text-dark">
+            <tr *ngFor='let msg of messageArray'>
+
+                <td>{{msg.requestId}}</td>
+                <td>{{msg.userId}}</td>
+                <td>{{msg.emailId}}</td>
+                <td>{{msg.message}}</td>
+            </tr>
+    </table>
+</div>
+<button type="button" class="btn btn-success" style="margin:auto;display:block" data-toggle="modal"
+    data-target="#exampleModal">SEND REPLY</ button>
+    <div class="modal fade text-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="card-header bg text-white ">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">SEND MESSAGE</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h4 sstyle="color: dodgerblue;" *ngIf='isMsg'>{{isMsg.description}}</h4>
+                    <form #userMessage="ngForm" (ngSubmit)="submitForm(userMessage)">
+                        <div class="form-group">
+                            <label for="userId">USER ID</label>
+                            <input type="number" name="userId" class="form-control border-primary" #userId="ngModel"
+                                ngModel required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">MESSAGE</label>
+                            <input type="text" name="message" class="form-control border-primary" #message="ngModel"
+                                ngModel required>
+                        </div>
+                        <div class="btn-group float-right">
+                            <button type="submit" class="btn btn-outline-primary"
+                                [disabled]='userMessage.invalid'>SEND</button>
+                            <button type="reset" class="btn btn-outline-dark">RESET</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4  card card-body">
+            <table class="table table-bordered table-light ">
+                <thead>
+                    <tr>
+                        <th>MESSAGE ID</th>
+                        <th> USER ID</th>
+                        <th>EMAIL ID</th>
+                        <th>MESSAGE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let msg of messageArray'>
+                        <td>{{msg.requestId}}</td>
+                        <td>{{msg.userId}}</td>
+                        <td>{{msg.emailId}}</td>
+                        <td>{{msg.message}}</td>
+                    </tr>
+            </table>
+        </div>

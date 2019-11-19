@@ -1,0 +1,22 @@
+<div class="topnav  bg-secondary" style="height: 70px;">
+  <a *ngIf='!auth.isLoggedIn()' routerLink="/">HOME</a>
+  <a *ngIf='!auth.isLoggedIn()' routerLink="/aboutus">ABOUTUS</a>
+  <a *ngIf="isAdmin()" routerLink="/adminpage">ADMIN</a>
+  <a *ngIf='!auth.isLoggedIn()' routerLink="/visitorproduct">PRODUCT</a>
+  <a *ngIf="isAdmin()" routerLink="/addproduct">ADD PRODUCT</a>
+  <a *ngIf="isAdmin()" routerLink="/seeproduct"> PRODUCTS</a>
+  <a *ngIf="isAdmin()" routerLink="/seeuser">SEE USER</a>
+  <a *ngIf="isAdmin()" routerLink="/seerequest">SEE REQUEST</a>
+  <a *ngIf="isAdmin()" routerLink="/history">ORDER HISTORY</a>
+  <a *ngIf="isUser()" routerLink="/userpage">USER</a>
+  <a *ngIf="isUser()" routerLink="/userproduct">VIEW PRODUCT</a>
+  <a *ngIf="isUser() " routerLink="/viewcart">VIEW CART</a>
+  <a *ngIf="isUser()" routerLink="/updateuser">UPDATE PROFILE</a>
+  <a *ngIf="isUser()" routerLink="/sendrequest">SEND MESSAGE</a>
+  <a *ngIf="isUser()" routerLink="/userhistory">PLACED ORDER</a>
+  <a *ngIf='!auth.isLoggedIn()' class="float-right" routerLink="/login">LOGIN</a>
+  <a *ngIf='!auth.isLoggedIn()' class="float-right" routerLink="/registration">REGISTRATION</a>
+  <button *ngIf='auth.isLoggedIn()' (click)="logout()" class="btn btn-primary float-right">
+    LOGOUT
+  </button>
+</div>

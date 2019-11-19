@@ -1,0 +1,26 @@
+package com.capgemini.hibernate;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.capgemini.hibernate.dao.AdminDaoImpl;
+
+import junit.framework.Assert;
+
+public class AdminTestCases {
+	private AdminDaoImpl adminDaoImpl;
+	@BeforeEach
+	public void createObject() {
+		adminDaoImpl=new AdminDaoImpl();
+		
+	}
+	
+@Test
+public void testAdminAuthentication() {
+	Assert.assertEquals(1, adminDaoImpl.adminLogin("harshini@gmail.com", "123456"));
+}
+@Test
+public void testAdminAuthenticationForNull() {
+	Assert.assertEquals(0,adminDaoImpl.adminLogin(null, null));
+}
+}

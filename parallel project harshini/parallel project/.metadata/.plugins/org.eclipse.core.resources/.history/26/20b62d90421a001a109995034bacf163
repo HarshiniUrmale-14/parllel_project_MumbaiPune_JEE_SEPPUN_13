@@ -1,0 +1,117 @@
+package com.capgemini.springrestmedical.beans;
+
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ResponseBean {
+
+	
+		private int statusCode;
+		private String Message;
+		private String description;
+		private AdminBean adminBean;
+		private List<AdminBean> adminList;
+		private UserBean userBean;
+		private List<UserBean> userList;
+		private ProductBean productBean;
+		private List<ProductBean> productList;
+		private CartBean cartBean;
+		private List<CartBean> cartList;
+		private RequestBean requestBean;
+		private List<RequestBean> requestList;
+		private ReplyBean replyBean;
+		private List<ReplyBean> replyList;
+		
+		public int getStatusCode() {
+			return statusCode;
+		}
+		public void setStatusCode(int statusCode) {
+			this.statusCode = statusCode;
+		}
+		public String getMessage() {
+			return Message;
+		}
+		public void setMessage(String message) {
+			Message = message;
+		}
+		public String getDescription() {
+			return description;
+		}
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		public AdminBean getAdminBean() {
+			return adminBean;
+		}
+		public void setAdminBean(AdminBean adminBean) {
+			this.adminBean = adminBean;
+		}
+		public List<AdminBean> getAdminList() {
+			return adminList;
+		}
+		public void setAdminList(List<AdminBean> adminList) {
+			this.adminList = adminList;
+		}
+		public UserBean getUserBean() {
+			return userBean;
+		}
+		public void setUserBean(UserBean userBean) {
+			this.userBean = userBean;
+		}
+		public List<UserBean> getUserList() {
+			return userList;
+		}
+		public void setUserList(List<UserBean> userList) {
+			this.userList = userList;
+		}
+		public ProductBean getProductBean() {
+			return productBean;
+		}
+		public void setProductBean(ProductBean productBean) {
+			this.productBean = productBean;
+		}
+		public List<ProductBean> getProductList() {
+			return productList;
+		}
+		public void setProductList(List<ProductBean> productList) {
+			this.productList = productList;
+		}
+		public CartBean getCartBean() {
+			return cartBean;
+		}
+		public void setCartBean(CartBean cartBean) {
+			this.cartBean = cartBean;
+		}
+		public List<CartBean> getCartList() {
+			return cartList;
+		}
+		public void setCartList(List<CartBean> cartList) {
+			this.cartList = cartList;
+		}
+		public RequestBean getRequestBean() {
+			return requestBean;
+		}
+		public void setRequestBean(RequestBean requestBean) {
+			this.requestBean = requestBean;
+		}
+		public List<RequestBean> getRequestList() {
+			return requestList;
+		}
+		public void setRequestList(List<RequestBean> requestList) {
+			this.requestList = requestList;
+		}
+		public ReplyBean getReplyBean() {
+			return replyBean;
+		}
+		public void setReplyBean(ReplyBean replyBean) {
+			this.replyBean = replyBean;
+		}
+		public List<ReplyBean> getReplyList() {
+			return replyList;
+		}
+		public void setReplyList(List<ReplyBean> replyList) {
+			this.replyList = replyList;
+		}
+		
+
+}

@@ -1,0 +1,56 @@
+package com.capgemini.collection.validation;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ValidationDaoImpl implements ValidationDao {
+
+Pattern pat = null;
+Matcher mat = null;
+
+public boolean validationEmail(String emailid) {
+	pat = Pattern.compile("\\w+\\@\\w+\\.\\w+");
+	mat = pat.matcher(emailid);
+	if (mat.matches()) {
+		return true;
+	}
+	return false;
+}
+public boolean validationPassword(String password) {
+	pat = Pattern.compile("\\w{6,8}");
+	mat = pat.matcher(password);
+	if (mat.matches()) {
+		return true;
+	}
+	return false;
+
+}
+public boolean validationMobileNo(String mobileNo) {
+
+	pat = Pattern.compile("\\d{10}");
+	mat = pat.matcher(mobileNo);
+	if(mat.matches()) {
+		return true;
+	}
+	return false;
+}
+public boolean validationProductCategory(String productCategory) {
+
+	pat = Pattern.compile("\\w+");
+	mat = pat.matcher(productCategory);
+	if(mat.matches()) {
+		return true;
+	}
+	return false;
+}
+public boolean validationProductName(String productName) {
+
+	pat = Pattern.compile("\\w+");
+	mat = pat.matcher(productName);
+	if(mat.matches()) {
+		return true;
+	}
+	return false;
+}
+
+}

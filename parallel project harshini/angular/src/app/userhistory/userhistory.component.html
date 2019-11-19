@@ -1,0 +1,21 @@
+<div class="container mt-4  card card-body ">
+    <table class="table table-bordered table-hover  ">
+        <thead class="bg-secondary text-white">
+            <tr>
+             <th>PRODUCT ID</th>
+                <th>PRODUCT CATEGORY</th>
+                <th>PRODUCT NAME</th>
+                <th>PRODUCT PRICE</th>
+                <th>PRODUCT QUANTITY</th>
+            </tr>
+        </thead>
+        <tbody class="text-dark">
+            <tr *ngFor='let history of  userHistoryArray'>
+               <td>{{history.productId}}</td>
+                <td>{{history.productCategory}}</td>
+                <td>{{history.productName}}</td>
+                <td>{{history.productPrice}}</td>
+                <td>{{history.quantity}}</td>
+            </tr>
+    </table>
+</div>

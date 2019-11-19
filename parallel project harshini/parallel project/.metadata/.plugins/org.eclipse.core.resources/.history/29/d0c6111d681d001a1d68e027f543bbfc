@@ -1,0 +1,77 @@
+package com.capgemini.collection.controller;
+
+import java.util.Scanner;
+
+import com.capgemini.collection.bean.UserBean;
+import com.capgemini.collection.dao.AdminDao;
+import com.capgemini.collection.dao.UserDao;
+import com.capgemini.collection.dao.UserDaoImpl;
+import com.capgemini.collection.factory.Factory;
+import com.capgemini.collection.validation.ValidationDao;
+
+public class RegisterUser {
+	public static void register() {
+		AdminDao adminDao = Factory.getAdminDAOImplInstance();
+		UserDao userDao = Factory.getUserDAOImplInstance();
+		ValidationDao vali = Factory.getValImplInstance();
+
+		Scanner scan = new Scanner(System.in);
+		UserBean userBean = new UserBean();
+		while (true) {
+			try {
+				System.out.println("ENTER USER ID");
+				int uId = Integer.parseInt(scan.nextLine());
+        while(true) {
+				System.out.println("ENTER THE EMAILID");
+				String emailId = scan.nextLine();
+				if (vali.validationEmail(emailId)) {
+					boolean check = false;
+					for (UserBean li : UserDaoImpl.user) {
+						if (emailId.equals(li.getEmailId())) {
+							check = true;
+						}
+					}
+					if (!check) {
+						userBean.setEmailId(emailId);
+						 while(true) {
+						System.out.println("ENTER THE PASSWORD");
+						String password = scan.nextLine();
+						if (vali.validationPassword(password)) {
+							userBean.setPassword(password);
+							 while(true) {
+							System.out.println("ENTER THE MOBILE NUMBER");
+							String mobileNo = scan.nextLine();
+							if (vali.validationMobileNo(mobileNo)) {
+								userBean.setMobileNo(mobileNo);
+								userDao.registration(uId, emailId, password, mobileNo);
+								break;
+							} else {
+								System.err.println("ENTER VALID MOBILENO");
+								System.err.println("ENTER ONLY 10 DIGITS");
+
+							}
+						}
+						}else {
+							System.err.println("ENTER VALID PASSWORD");
+							System.err.println("ENTER PASSWORD BETWEEN 6 TO 8");
+						}
+					} 
+					}else {
+						System.err.println("EMAIL ID ALREADY EXIST ");
+						
+					}
+
+				} else {
+					System.err.println("ENTER VALID EMAILID :THE MAIL ID SHOULD BE OF TYPE abc@xyz.com");
+				
+
+				}
+			} 
+			}catch (NumberFormatException e) {
+				System.err.println("ENTER ONLY NUMBER");
+				
+			}
+		}
+
+	}// end of register method
+}// end of class

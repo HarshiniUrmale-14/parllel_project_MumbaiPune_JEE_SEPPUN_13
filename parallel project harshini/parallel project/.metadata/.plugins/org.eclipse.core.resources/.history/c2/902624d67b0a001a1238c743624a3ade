@@ -1,0 +1,20 @@
+package com.capgemini.collection.dao;
+
+import java.util.List;
+
+import com.capgemini.collection.bean.ProductBean;
+
+public interface Dao {
+	public void viewproducts();
+
+	public void seeCart(int uId);
+
+	public void addToCart(int uId);
+
+	public void deleteFormCart();
+
+	public void placeOrder(int uId);
+
+	public void viewOrder(int uId);
+
+}// end of interface

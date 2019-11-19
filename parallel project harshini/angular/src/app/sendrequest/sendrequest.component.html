@@ -1,0 +1,50 @@
+<div class="card card-body col-md-4 offset-md-4  mt-5 ">
+  <form #sendForm='ngForm' (ngSubmit)='sendMessage(sendForm)'>
+    <div class="card">
+      <div class="card-header bg-secondary text-white">
+        <label for="message"> ENTER THE MESSAGE TO BE SENT</label>
+      </div>
+      <div class="form-group" rows="4" cols="50">
+        <label for="message"></label>
+        <textarea class="form-control" name="message" #message='ngModel' ngModel rows="3"></textarea>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-right">SEND</button>
+    <h4 style="color: dodgerblue;" *ngIf='inMsg'>{{inMsg.description}}</h4>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">SEE REPLY</button>
+
+    <div class="modal fade text-dark " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg">
+            <h5 class="modal-title bg" id="exampleModalLabel">SEE REPLY</h5>
+            <button type="button" class="close" data-dismiss="modal" (click)="productService.getUserData()"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container mt-4  card card-body">
+              <table class="table table-bordered table-light">
+                <thead>
+                  <tr>
+                    <th>MESSAGE ID</th>
+                    <th>MESSAGE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let msg of messageArray'>
+                    <td>{{msg.replyId}}</td>
+                    <td>{{msg.message}}</td>
+                  </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+</div>

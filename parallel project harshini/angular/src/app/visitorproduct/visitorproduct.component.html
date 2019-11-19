@@ -1,0 +1,15 @@
+<h1 style="text-align: center;">PRODUCTS !!!!</h1>
+<div class="container mt-5  ">
+    <div class="container mt-4 ">
+        <div>
+        <div class="col-md-4 card card-body border-primary float-left" style="height:300px"
+            *ngFor='let product of productarray'>
+            <p> PRODUCT ID :{{product.productId}}</p>
+            <p> PRODUCT CATEGORY :{{product.productCategory}}</p>
+            <P> PRODUCT NAME :{{product.productName}}</P>
+            <p> PRODUCT PRICE :{{product.productPrice}}</p>
+            <P> PRODUCT QUANTITY :{{product.productQuantity}}</P>
+            </div>
+        </div>
+    </div>
+</div>

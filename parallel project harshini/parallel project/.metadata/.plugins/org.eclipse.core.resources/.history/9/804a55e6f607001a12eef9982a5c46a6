@@ -1,0 +1,15 @@
+package com.capgemini.hibernate;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import com.capgemini.hibernate.dao.UserDaoImpl;
+
+public class UserTestCases {
+	private UserDaoImpl userDaoImpl;
+
+	@BeforeEach
+	public void createObject() {
+		userDaoImpl = new UserDaoImpl();
+
+	}
+}

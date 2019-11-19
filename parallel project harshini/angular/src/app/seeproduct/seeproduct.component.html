@@ -1,0 +1,98 @@
+<div class="container mt-5 ">
+    <div class="container mt-4">
+        <h4 style="color:red;" *ngIf='delete'>{{delete.description}}</h4>
+        <div class="col-md-4 card card-body border-primary float-left" style="height:300px"
+            *ngFor='let product of productarray'>
+            <p> PRODUCT ID :{{product.productId}}</p>
+            <p> PRODUCT CATEGORY :{{product.productCategory}}</p>
+            <P> PRODUCT NAME :{{product.productName}}</P>
+            <p> PRODUCT PRICE :{{product.productPrice}}</p>
+            <P> PRODUCT QUANTITY :{{product.productQuantity}}</P>
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal"
+                (click)="selectProduct(product)">UPDATE</button>
+
+            <div class="modal fade text-dark" id="exampleModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="card-header bg text-white ">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalLabel">UPDATE PRODUCT</h5>
+                                <button type="button" class="close" data-dismiss="modal" (click)="getProduct()"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <h4 sstyle="color: dodgerblue;" *ngIf='update'>{{update.description}}</h4>
+                            <form #updateProduct="ngForm" (ngSubmit)="submitForm(updateProduct)">
+                                <input type="hidden" name="pk" #pk='ngModel' [(ngModel)]="selectedProduct.pk">
+                                <div class="form-group">
+                                    <label for="productId"></label>
+                                    <input type="hidden" name="productId" class="form-control " #productId="ngModel"
+                                        [(ngModel)]="selectedProduct.productId" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productCategory">PRODUCT CATEGORY</label>
+                                    <input type="text" name="productCategory" class="form-control "
+                                        #productCategory="ngModel" [(ngModel)]="selectedProduct.productCategory"
+                                        required pattern="(?=.*[a-zA-Z]).{5,20}">
+                                    <div *ngIf='productCategory.touched && productCategory.invalid'>
+                                        <p class="alert alert-danger" *ngIf='productCategory.errors.required'> field is
+                                            mandatory</p>
+                                        <p class="alert alert-danger" *ngIf='productCategory.errors.pattern'> only
+                                            minlength 5 and maxlength 20 character only</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productName">PRODUCT NAME</label>
+                                    <input type="text" name="productName" class="form-control" #productName="ngModel"
+                                        [(ngModel)]="selectedProduct.productName" required
+                                        pattern="(?=.*[a-z A-Z 0-9]).(?=.*[a-zA-Z]).{6,25}">
+                                    <div *ngIf='productName.touched && productName.invalid'>
+                                        <p class="alert alert-danger" *ngIf='productName.errors.required'> field is
+                                            mandatory</p>
+                                        <p class="alert alert-danger" *ngIf='productName.errors.pattern'> only minlength
+                                            6 and maxlength 25 </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productPrice">PRODUCT PRICE</label>
+                                    <input type="text" name="productPrice" class="form-control " #productPrice="ngModel"
+                                        [(ngModel)]="selectedProduct.productPrice" required>
+                                    <div *ngIf='productPrice.touched && productPrice.invalid'
+                                        pattern="^\d{0,8}[.]?\d{1,7}$">
+                                        <p class="alert alert-danger" *ngIf='productPrice.errors.required'> field is
+                                            mandatory</p>
+                                        <p class="alert alert-danger" *ngIf='productPrice.errors.pattern'> enter only
+                                            price </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productQuantity">PRODUCT QUANTITY</label>
+                                    <input type="number" name="productQuantity" class="form-control "
+                                        #productQuantity="ngModel" [(ngModel)]="selectedProduct.productQuantity"
+                                        required>
+                                    <div *ngIf='productQuantity.touched && productQuantity.invalid'>
+                                        <p class="alert alert-danger" *ngIf='productQuantity.errors.required'>
+                                            field is mandatory
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="btn-grroup float-right">
+                                    <button type="submit" class="btn btn-outline-primary"
+                                        [disabled]='updateProduct.invalid'>SUBMIT</button>
+                                    <button type="reset" class="btn btn-outline-dark">RESET</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-outline-danger" (click)="deleteProduct(product)">DELETE</button>
+        </div>
+    </div>
+</div>

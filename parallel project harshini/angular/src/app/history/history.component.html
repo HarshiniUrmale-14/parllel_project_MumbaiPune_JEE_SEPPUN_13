@@ -1,0 +1,31 @@
+<div class="container mt-4  card card-body ">
+    <table class="table table-bordered table-hover  ">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th>ORDER ID</th>
+                <th> CART ID</th>
+                <th>USER ID</th>
+                <th>EMAIL ID</th>
+                <th>USER ADDRESS</th>
+                <th>PRODUCT ID</th>
+                <th>PRODUCT CATEGORY</th>
+                <th>PRODUCT NAME</th>
+                <th>PRODUCT PRICE</th>
+                <th>PRODUCT QUANTITY</th>
+            </tr>
+        </thead>
+        <tbody class="text-dark">
+            <tr *ngFor='let history of orderArray'>
+                <td>{{history.orderId}}</td>
+                <td>{{history.cartId}}</td>
+                <td>{{history.userId}}</td>
+                <td>{{history.emailId}}</td>
+                <td>{{history.address}}</td>
+                <td>{{history.productId}}</td>
+                <td>{{history.productCategory}}</td>
+                <td>{{history.productName}}</td>
+                <td>{{history.productPrice}}</td>
+                <td>{{history.quantity}}</td>
+            </tr>
+    </table>
+</div>

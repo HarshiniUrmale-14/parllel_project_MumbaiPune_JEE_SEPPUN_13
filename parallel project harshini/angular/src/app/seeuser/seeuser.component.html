@@ -1,0 +1,24 @@
+<div class="container mt-4  card card-body">
+    <table class="table table-bordered table-hover">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th>USER ID</th>
+                <th>USER NAME</th>
+                <th>EMAIL ID</th>
+                <th>MOBILE NO</th>
+                <th>ADDRESS</th>
+                <th>DELETE USER</th>
+            </tr>
+        </thead>
+        <tbody class="text-dark">
+            <tr *ngFor='let user of userArray'>
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.emailId}}</td>
+                <td>{{user.mobileNo}}</td>
+                <td>{{user.address}}</td>
+                <td><button class="btn btn-outline-danger" (click)="deleteUser(user)">DELETE USER</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

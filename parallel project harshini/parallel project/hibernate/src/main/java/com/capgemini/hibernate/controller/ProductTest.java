@@ -1,0 +1,27 @@
+package com.capgemini.hibernate.controller;
+
+import java.util.List;
+
+import com.capgemini.hibernate.beans.ProductBean;
+import com.capgemini.hibernate.dao.Dao;
+import com.capgemini.hibernate.factory.Factory;
+
+public class ProductTest {
+	public static void product() {
+		Dao product = Factory.getDAOImplInstance();
+		List<ProductBean> list = product.getProducts();
+		if (list != null) {
+			for (ProductBean user : list) {
+				System.out.println("PRODUCT ID IS   :" + user.getProductId());
+				System.out.println("PRODUCT CATEGORY IS  :" + user.getProductCategory());
+				System.out.println("PRODUCT NAME IS  :" + user.getProductName());
+				System.out.println("PRODUCT PRICE IS   :" + user.getProductPrice());
+				System.out.println("NO OF PRODUCT QUANTITY PRESENT IS  :" + user.getProductQuantity());
+				System.out.println("--------------------------------------------------------------");
+			}
+		} else {
+			System.err.println("SOMETHING WENT WRONG");
+		}
+	}
+
+}

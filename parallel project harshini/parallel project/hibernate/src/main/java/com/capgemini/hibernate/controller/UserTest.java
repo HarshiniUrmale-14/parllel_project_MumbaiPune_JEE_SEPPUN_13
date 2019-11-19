@@ -1,0 +1,124 @@
+package com.capgemini.hibernate.controller;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.capgemini.hibernate.beans.CartBean;
+import com.capgemini.hibernate.beans.ProductBean;
+import com.capgemini.hibernate.beans.UserBean;
+import com.capgemini.hibernate.dao.Dao;
+import com.capgemini.hibernate.dao.UserDao;
+import com.capgemini.hibernate.factory.Factory;
+import com.capgemini.hibernate.validation.CustomValidationDao;
+
+public class UserTest {
+	public static void user() {
+		int userId = 0;
+		Scanner scan = new Scanner(System.in);
+		Dao dao1 = Factory.getDAOImplInstance();
+
+		UserDao dao = Factory.getUserDAOImplInstance();
+		CustomValidationDao customVali = Factory.getCustomValImplInstance();
+		UserBean userBean = new UserBean();
+		System.out.println("ENTER THE EMAIL");
+		String emailId = scan.nextLine();
+
+		if (customVali.checkUserEmail(emailId)) {
+
+			System.out.println("ENTER THE PASSWORD");
+			String password = scan.nextLine();
+			userId = dao.userLogin(emailId, password);
+			if (userId != 0) {
+				System.out.println("LOGGED IN SUCCESSFULLY");
+			} else {
+				System.out.println("PASSWORD IS WRONG");
+			}
+		} else {
+			System.out.println("THIS EMAILID DOES NOT EXIST");
+		}
+		while (userId != 0) {
+			System.out.println("ENTER 1 TO VIEW THE PRODUCTS");
+			System.out.println("ENTER 2 TO VIEW THE CART");
+			System.out.println("ENTER 3 TO ADD PRODUCT TO THE CART");
+			System.out.println("ENTER 4 TO UPDATE THE PROFILE OF USER");
+			System.out.println("ENTER 5 TO DELETE PRODUCTS FORM CART");
+			System.out.println("ENTER 6 TO MAKE PAYMENT");
+			System.out.println("ENTER 7 TO SEND THE MESSAGE TO ADMINISTRATOR");
+			System.out.println("ENTER 8 TO SEE THE REPLY FROM ADMINISTRATOR");
+			System.out.println("ENTER 9 TO LOGOUT");
+			String button = scan.nextLine();
+			switch (button) {
+			case "1":
+				List<ProductBean> list = dao1.getProducts();
+				if (list != null) {
+					for (ProductBean user : list) {
+						System.out.println("PRODUCT ID IS   :" + user.getProductId());
+						System.out.println("PRODUCT CATEGORY IS  :" + user.getProductCategory());
+						System.out.println("PRODUCT NAME IS  :" + user.getProductName());
+						System.out.println("PRODUCT PRICE IS   :" + user.getProductPrice());
+						System.out.println("NO OF PRODUCT QUANTITY PRESENT IS  :" + user.getProductQuantity());
+						System.out.println("--------------------------------------------------------------");
+					}
+				} else {
+					System.out.println("SOMETHING WENT WRONG");
+				}
+				break;
+			case "2":
+				List<CartBean> list1 = dao.seeCart(userId);
+				if (list1 != null) {
+					for (CartBean cartBean : list1) {
+						System.out.println(".................................................................");
+						System.out.println("CART ID IS" + cartBean.getCartId());
+						System.out.println("USER ID IS" + cartBean.getUserId());
+						System.out.println("USER ID IS" + cartBean.getUserId());
+						System.out.println("USER EMAIL ID IS" + cartBean.getEmailId());
+						System.out.println("PRODUCT ID IS" + cartBean.getProductId());
+						System.out.println("PRODUCT CATEGORY IS" + cartBean.getProductCategory());
+						System.out.println("PRODUCT NAME IS" + cartBean.getProductName());
+						System.out.println("PRODUCT PRICE IS" + cartBean.getProductPrice());
+						System.out.println("PRODUCT QUANTITY SELECETD BY USER" + cartBean.getQuantity());
+						System.out.println("................................................................");
+					}
+				}
+				break;
+			case "3":
+				System.out.println("ADD THE PRODUCTS TO THE CART");
+				dao.addToCart(userId);
+				break;
+			case "4":
+				System.out.println("UPDATE THE PROFILE");
+				dao.updateUser(userId);
+				break;
+			case "5":
+				System.out.println("ENTER THE PRODUCT NAME TO BE DELETED");
+				String productName = scan.nextLine();
+				if (customVali.checkProductFromCart(productName, userId)) {
+					boolean value = dao.deleteFromCart(productName);
+					if (value) {
+						System.out.println("PRODUCT DELETED SUCCESSFULLY");
+					}
+				} else {
+					System.err.println("PRODUCT IS NOT PRESENT IN THE CART");
+				}
+				break;
+			case "6":
+				dao.payment(userId);
+				break;
+			case "7":
+				dao.sendRequest(userId);
+				break;
+			case "8":
+				dao.seeReply(userId);
+				break;
+			case "9":
+				System.out.println("YOU ARE LOGGED OUT");
+				System.exit(0);
+				break;
+			default:
+				System.out.println("...............................................");
+				System.err.println("ENTER BUTTON BETWEEN 1 TO 9");
+				System.out.println("...............................................");
+			}
+		}
+	}
+}
